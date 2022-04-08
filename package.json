@@ -1,0 +1,37 @@
+{
+  "name": "static-server-test",
+  "version": "1.0.0",
+  "description": "Static server test",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine",
+    "bench-express": "node express.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
+    "bench-express-static": "node express-static.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
+    "bench-express-fixed": "node express-fixed.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
+    "bench-polka": "node polka.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
+    "bench-polka-static": "node polka-static.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
+    "bench-polka-fixed": "node polka-fixed.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
+    "bench-fastify": "node polka.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
+    "bench-fastify-static": "node polka-static.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
+    "bench-uws": "node uws.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
+    "bench-uws-fixed": "node uws-fixed.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apla/node-static-server-test.git"
+  },
+  "author": "Ivan Baktsheev <dot.and.thing@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/apla/node-static-server-test/issues"
+  },
+  "homepage": "https://github.com/apla/node-static-server-test#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "fastify": "^3.28.0",
+    "fastify-static": "^4.6.1",
+    "polka": "^0.5.2",
+    "uwebsocket-serve": "^1.0.7",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.6.0"
+  }
+}
