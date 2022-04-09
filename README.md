@@ -1,16 +1,5 @@
 # node-static-server-test
 
-## TL;DR
-
-```
-git clone https://github.com/apla/node-static-server-test
-sudo apt install wrk
-cd node-static-server-test
-npm i
-npm run --silent bench-all
-```
-
-
 ## Serving static files with Node.JS
 
 Node.js have internal `http`/`https` module to create web server.
@@ -159,7 +148,7 @@ This is very fast web server, developed by Alex Hultman.
 
 On my benchmark uWebSockets.js can handle 74527.95 requests per second while cluster of two polka nodes just 63141.36.
 
-File serving doesn't need any workarounds because routes handling is very thoughtful.
+File serving doesn't need any workarounds because [routes handling is very thoughtful](https://github.com/uNetworking/uWebSockets/blob/master/misc/READMORE.md).
 
 >Pattern matching
 >
@@ -185,71 +174,3 @@ https://alexhultman.medium.com/beware-of-tin-foil-hattery-f738b620468c
 
 To me, this developer is in the good company of authors of leftpad, event-stream, node-ipc. I don't trust uWebSockets.js author an I will never use it in my own projects.
 
-
-npm i uWebSockets.js@uNetworking/uWebSockets.js#v20.6.0
-
-https://github.com/uNetworking/uWebSockets/blob/master/misc/READMORE.md
-
-
-After adding 
-
-### Data used in the article
-
-```
-server,var,os,rps
-express,,mac,14388.95
-express-files,static,mac,10039.27
-polka,,mac,39736.39
-polka-files,static,mac,22411.12
-fastify,,mac,39266.82
-fastify-files,static,mac,23271.10
-```
-
-```
-server,var,os,rps
-express,,linux,4804.01
-express-files,static,linux,3512.84
-express-fixed,fixed,linux,4902.01
-polka,,linux,13964.56
-polka-files,static,linux,7816.86
-polka-fixed,fixed,linux,14142.73
-fastify,,linux,13731.78
-fastify-files,static,linux,8786.26
-```
-
-1K file
-
-```
-server,os,rps
-nginx,linux,15273.08
-express-fixed,linux,1733.78
-polka-fixed,linux,3496.40
-uws-fixed,linux,2625.79
-```
-
-#### Chart software
-
-https://rawgraphs.io
-
-
-
-
-### uWebSockets
-
-https://medium.com/@rockstudillo/beware-of-uwebsockets-js-b51c92cac83f
-https://alexhultman.medium.com/beware-of-tin-foil-hattery-f738b620468c
-
-also alexhultman have github icon with free truckers
-
-npm i uWebSockets.js@uNetworking/uWebSockets.js#v20.6.0
-
-https://github.com/uNetworking/uWebSockets/blob/master/misc/READMORE.md
-
-Pattern matching
-
-Routes are matched in order of specificity, not by the order you register them:
-
-Highest priority - static routes, think "/hello/this/is/static".
-Middle priority - parameter routes, think "/candy/:kind", where value of :kind is retrieved by req.getParameter(0).
-Lowest priority - wildcard routes, think "/hello/*".
-In other words, the more specific a route is, the earlier it will match. This allows you to define wildcard routes that match a wide range of URLs and then "carve" out more specific behavior from that.
