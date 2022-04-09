@@ -5,16 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "jasmine",
-    "bench-express": "node express.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
-    "bench-express-static": "node express-static.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
-    "bench-express-fixed": "node express-fixed.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
-    "bench-polka": "node polka.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
-    "bench-polka-static": "node polka-static.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
-    "bench-polka-fixed": "node polka-fixed.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
-    "bench-fastify": "node polka.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
-    "bench-fastify-static": "node polka-static.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
+    "bench-express": "node express.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' | cut -d ':' -f 2 | xargs printf \"express,,`uname`,%s\n\" ; kill $WAIT_FOR",
+    "bench-express-static": "node express-static.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' | cut -d ':' -f 2 | xargs printf \"express-files,files,`uname`,%s\n\" ; kill $WAIT_FOR",
+    "bench-express-fixed": "node express-fixed.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' | cut -d ':' -f 2 | xargs printf \"express-fixed,fixed,`uname`,%s\n\" ; kill $WAIT_FOR",
+    "bench-polka": "node polka.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' | cut -d ':' -f 2 | xargs printf \"polka,,`uname`,%s\n\" ; kill $WAIT_FOR",
+    "bench-polka-static": "node polka-static.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' | cut -d ':' -f 2 | xargs printf \"polka-files,files,`uname`,%s\n\" ; kill $WAIT_FOR",
+    "bench-polka-fixed": "node polka-fixed.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' | cut -d ':' -f 2 | xargs printf \"polka-fixed,fixed,`uname`,%s\n\" ; kill $WAIT_FOR",
+    "bench-fastify": "node polka.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' | cut -d ':' -f 2 | xargs printf \"fastify,,`uname`,%s\n\" ; kill $WAIT_FOR",
+    "bench-fastify-static": "node polka-static.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' | cut -d ':' -f 2 | xargs printf \"fastify-files,files,`uname`,%s\n\" ; kill $WAIT_FOR",
     "bench-uws": "node uws.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
-    "bench-uws-fixed": "node uws-fixed.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR"
+    "bench-uws-fixed": "node uws-fixed.js & WAIT_FOR=$! ; sleep 1 ; wrk -t4 -c4 -d10s http://localhost:3000/users/123 | egrep '^Req' ; kill $WAIT_FOR",
+    "bench-all": "npm run bench-express ; npm run bench-express-static ; npm run bench-express-fixed ; npm run bench-polka ; npm run bench-polka-static ; npm run bench-polka-fixed ; npm run bench-fastify ; npm run bench-fastify-static ;"
   },
   "repository": {
     "type": "git",
