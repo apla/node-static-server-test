@@ -27,11 +27,11 @@ Along with dynamic content, node.js web servers can, obviously,
 serve static files. Performance-wise, it is not the best way
 to serve static files. Using a separate proxy server
 like [nginx](https://www.nginx.com) is much better for that purpose.
-Linux systems have a few technologies to optimize such tasks.
+Linux systems have several technologies to optimize such tasks.
 `sendfile` allows you to stream file contents to the socket
 using operating system routines and buffers.
 `mmap` can be used to map file contents to the memory
-and speed up reading purposes. Additionally to the system calls above,
+and speed up reading purposes. In addition to the system calls above,
 Nginx can use its own caching mechanisms. As your project grows,
 you may use AWS/Azure/Google/Cloudflare/whatever CDNs
 to distribute static files for users in different regions.
@@ -89,7 +89,7 @@ as registered by use method. `polka` calls all `use` middlewares at request star
 but have `onNoMatch` handler. `fastify` server page mentions
 [setNotFoundHandler](https://www.fastify.io/docs/latest/Reference/Server/#setnotfoundhandler)
 with `preValidation` hook on [lifecycle page](https://www.fastify.io/docs/latest/Reference/Lifecycle/#lifecycle).
-But I cannot find a way to use `fastify-static` with `preValidation` hook.
+But I could not find a way to use `fastify-static` with `preValidation` hook.
 
 Results:
 
@@ -105,7 +105,7 @@ and other specific middlewares to the URLs where is needed?
 
 ### Existing static middleware
 
-While I’m browsing source files, I discovered some overengineered static handlers:
+While browsing source files, I discovered some overengineered static handlers:
 
  * https://github.com/expressjs/serve-static/blob/master/index.js
  * https://github.com/fastify/fastify-static/blob/master/index.js
@@ -152,7 +152,7 @@ This is very fast web server, developed by Alex Hultman.
 
 On my benchmark uWebSockets.js can handle 74527.95 requests per second with single process, while cluster of two polka nodes just 63141.36. Additional performance can be squeezed from node `http`, but load balancing is a [known linux problem](https://blog.cloudflare.com/the-sad-state-of-linux-socket-balancing/).
 
-File serving doesn't need any workarounds because [routes handling is very thoughtful](https://github.com/uNetworking/uWebSockets/blob/master/misc/READMORE.md).
+File serving doesn't need any workarounds because [of good routes handling](https://github.com/uNetworking/uWebSockets/blob/master/misc/READMORE.md).
 
 >Pattern matching
 >
@@ -163,7 +163,7 @@ File serving doesn't need any workarounds because [routes handling is very thoug
 >Lowest priority - wildcard routes, think "/hello/*".
 >In other words, the more specific a route is, the earlier it will match. This allows you to define wildcard routes that match a wide >range of URLs and then "carve" out more specific behavior from that.
 
-But performance is not so good (10K file):
+But static serving performance is not so good (10K file):
 
 polka-cluster 17778.46 RPS
 uwf-fixed 9023.0 RPS
